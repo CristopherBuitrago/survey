@@ -37,6 +37,12 @@ public class Survey {
     @Column
     private String description;
 
+    @Column
+    private String componentHtml;
+
+    @Column
+    private String componentReact;
+    
     @Column(name="created_at", columnDefinition="TIMESTAMP")
     private LocalDateTime createdAt;
     
