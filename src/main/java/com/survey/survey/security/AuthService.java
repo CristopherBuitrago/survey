@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +25,20 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        // Autenticación usando el correo electrónico
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(); // Cambiado a findByEmail
         String token = jwtService.getToken(user);
+
+        // Obtener el rol del usuario
+        String role = user.getRoles().stream()
+                           .findFirst()
+                           .map(Role::getName)
+                           .orElse("UNKNOWN_ROLE");
+
         return AuthResponse.builder()
             .token(token)
+            .role(role) // Incluye el rol en la respuesta
             .build();
     }
 
@@ -40,19 +48,22 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("Rol USER no encontrado"));
 
         // Crear una nueva instancia de User
-        User newuser = User.builder()
-            .username(request.getUsername())
-            .password(passwordEncoder.encode(request.getPassword()))  // encriptar la contraseña 
+        User newUser = User.builder()
+            .username(request.getUsername())  // Puedes mantener el nombre de usuario o eliminar si ya no es necesario
+            .password(passwordEncoder.encode(request.getPassword()))  // Encriptar la contraseña
             .email(request.getEmail())
             .roles(List.of(userRole))  // Asignar el rol USER por defecto
             .build();
 
         // Guardar el usuario en la base de datos
-        userRepository.save(newuser);
+        userRepository.save(newUser);
 
         // Devolver una respuesta de autenticación (AuthResponse)
+        String token = jwtService.getToken(newUser);
+
         return AuthResponse.builder()
-            .token(jwtService.getToken(newuser))
+            .token(token)
+            .role(userRole.getName()) // Incluye el rol en la respuesta
             .build();
     }
 }
