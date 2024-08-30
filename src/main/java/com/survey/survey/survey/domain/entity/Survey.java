@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -42,6 +43,7 @@ public class Survey {
     @Column(name="updated_at", columnDefinition="TIMESTAMP")
     private LocalDateTime updatedAt;
 
+    @ManyToMany
     @JoinTable(
         name = "survey_category",
         joinColumns = @JoinColumn(name = "survey_id"),
