@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.survey.survey.auth.role.domain.entity.Role;
 
 import jakarta.persistence.Column;
@@ -20,12 +19,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.FetchType;
 
 @Data
 @Builder
@@ -44,8 +43,8 @@ public class User implements UserDetails {
 
     private String password;
     private String email;
-    
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_roles", 
         joinColumns = @JoinColumn(name = "user_id"), 
@@ -61,5 +60,4 @@ public class User implements UserDetails {
         }
         return authorities;
     }
-
 }
