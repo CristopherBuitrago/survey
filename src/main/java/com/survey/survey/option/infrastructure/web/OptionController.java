@@ -82,7 +82,7 @@ public class OptionController {
         }
 
         // Si se actualiza con éxito, retornar la opción actualizada en la respuesta
-        return ResponseEntity.ok(updatedOption.get());
+        return new ResponseEntity<>(updatedOption.orElseThrow(), HttpStatus.OK);
     }
 
     // Eliminar una opción por ID
@@ -97,6 +97,6 @@ public class OptionController {
         }
 
         // Si se elimina con éxito, retornar una respuesta de No Content
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return new ResponseEntity<>(deletedOption.orElseThrow(), HttpStatus.OK);
     }
 }
