@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.survey.survey.survey.application.service.ISurveyService;
 import com.survey.survey.survey.domain.entity.Survey;
+
+import jakarta.validation.Valid;
 
 
 
@@ -31,14 +34,15 @@ public class SurveyController {
 
     //find all
     @GetMapping
-    public List<Survey> findAll() {
+    public ResponseEntity<List<Survey>> findAll() {
         /*
         * using the service to find all,
         * remember that surveyService allow us 
         * navigate into other classes that implements 
         * IUserService like for example SurveyAdapter 
         */
-        return surveyService.findAll();
+        List<Survey> surveys = surveyService.findAll();
+        return new ResponseEntity<>(surveys, HttpStatus.OK);
     }
 
     // find by id
@@ -57,18 +61,23 @@ public class SurveyController {
     }
     
     
-    // save (without validation for now)
+    // save
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody Survey survey) {
-        // save the survey into db
-        surveyService.save(survey);
-        // set successful message
-        return new ResponseEntity<>(survey, HttpStatus.CREATED);
+    public ResponseEntity<?> create(@Valid @RequestBody Survey survey, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(result.getFieldError());
+        }
+
+        Survey savedSurvey = surveyService.save(survey);
+        return new ResponseEntity<>(savedSurvey, HttpStatus.CREATED);
     }
 
     // update
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateSurvey(@PathVariable Integer id, @RequestBody Survey updatedSurvey) {
+    public ResponseEntity<?> updateSurvey(@PathVariable Integer id,@Valid @RequestBody Survey updatedSurvey, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(result.getFieldErrors());
+        }
         // first we need to find the survey
         Optional<Survey> foundSurvey = surveyService.findById(id);
 

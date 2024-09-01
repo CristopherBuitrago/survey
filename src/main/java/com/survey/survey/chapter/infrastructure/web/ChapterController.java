@@ -35,8 +35,9 @@ public class ChapterController {
 
     // find all
     @GetMapping("/all")
-    public List<Chapter> findAll() {
-        return chapterService.findAll();
+    public ResponseEntity<List<Chapter>> findAll() {
+        List<Chapter> chapters = chapterService.findAll();
+        return ResponseEntity.ok(chapters);
     }
 
     // find by id

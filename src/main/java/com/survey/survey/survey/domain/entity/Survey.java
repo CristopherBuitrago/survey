@@ -19,6 +19,7 @@ import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,15 +35,19 @@ public class Survey {
     private int id;
 
     @Column
+    @NotBlank(message="The field cannot be blank!")
     private String name;
 
     @Column
+    @NotBlank(message="The field cannot be blank!")
     private String description;
 
     @Column
+    @NotBlank(message="The field cannot be blank!")
     private String componentHtml;
 
     @Column
+    @NotBlank(message="The field cannot be blank!")
     private String componentReact;
     
     @Column(name="created_at", columnDefinition="TIMESTAMP")

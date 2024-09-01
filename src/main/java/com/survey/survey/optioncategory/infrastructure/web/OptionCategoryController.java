@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.survey.survey.optioncategory.application.service.IOptionCategoryService;
 import com.survey.survey.optioncategory.domain.entity.OptionCategory;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/option-categories")
 public class OptionCategoryController {
@@ -27,7 +30,11 @@ public class OptionCategoryController {
 
     // Create a new OptionCategory
     @PostMapping("/create")
-    public ResponseEntity<OptionCategory> createOptionCategory(@RequestBody OptionCategory optionCategory) {
+    public ResponseEntity<?> createOptionCategory(@Valid @RequestBody OptionCategory optionCategory, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(result.getFieldError());
+        }
+        
         OptionCategory createdOptionCategory = optionCategoryService.save(optionCategory);
         return new ResponseEntity<>(createdOptionCategory, HttpStatus.CREATED);
     }

@@ -1,19 +1,14 @@
-package com.survey.survey.categoriescatalog.domain.entity;
+package com.survey.survey.question.domain.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.survey.survey.survey.domain.entity.Survey;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -21,29 +16,36 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name="questions")
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@Table(name = "categories_catalog")
-public class CategoriesCatalog {
-    
+public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    
-    @Column(nullable = false)
+
+    @Column(nullable=false)
     @NotBlank(message="The field cannot be blank!")
-    private String name;
+    private String questionNumber;
+
+    @Column(nullable=false)
+    @NotBlank(message="The field cannot be blank!")
+    private String responseType;
+
+    @Column(nullable=false)
+    @NotBlank(message="The field cannot be blank!")
+    private String commentQuestion;
+
+    @Column(nullable=false)
+    @NotBlank(message="The field cannot be blank!")
+    private String questionText;
     
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false)
+    @Column(columnDefinition="TIMESTAMP", nullable=false, updatable=false)
     private LocalDateTime createdAt;
     
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP", nullable = false)
+    @Column(columnDefinition="TIMESTAMP", nullable=false, updatable=false)
     private LocalDateTime updatedAt;
-
-    @JsonIgnoreProperties({"categories", "handler", "hibernateLazyInitializer"})
-    @ManyToMany(mappedBy = "categories")
-    private List<Survey> surveys;
 
     @PrePersist
     protected void onCreate() {
@@ -51,7 +53,7 @@ public class CategoriesCatalog {
         this.updatedAt = LocalDateTime.now();
     }
 
-    @PreUpdate
+    @PostPersist
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
