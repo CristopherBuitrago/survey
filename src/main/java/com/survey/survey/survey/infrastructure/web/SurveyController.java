@@ -33,7 +33,7 @@ public class SurveyController {
     private ISurveyService surveyService;
 
     //find all
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Survey>> findAll() {
         /*
         * using the service to find all,

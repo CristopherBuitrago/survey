@@ -26,7 +26,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping(name="/questions")
+@RequestMapping("/questions")
 public class QuestionController {
     @Autowired
     private IQuestionService questionService;
