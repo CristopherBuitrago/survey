@@ -21,13 +21,8 @@ import com.survey.survey.chapter.domain.entity.Chapter;
 
 import jakarta.validation.Valid;
 
-
-
-
-
-
 @RestController
-@RequestMapping(name="/chapters")
+@RequestMapping("/chapters")
 public class ChapterController {
 
     @Autowired
@@ -53,9 +48,9 @@ public class ChapterController {
     }
     
     // find by name
-    @GetMapping("/{name}")
-    public ResponseEntity<?> findByName(@PathVariable String name) {
-        Optional<Chapter> foundChapter = chapterService.findByName(name);
+    @GetMapping("/{title}")
+    public ResponseEntity<?> findByTitle(@PathVariable String title) {
+        Optional<Chapter> foundChapter = chapterService.findByTitle(title);
 
         if (!foundChapter.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
