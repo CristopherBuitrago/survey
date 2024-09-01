@@ -43,8 +43,8 @@ public class ChapterAdapter implements IChapterService{
 
     @Override
     @Transactional
-    public Optional<Chapter> findByName(String name) {
-        Optional<Chapter> foundChapter = chapterRepository.findByName(name);
+    public Optional<Chapter> findByTitle(String title) {
+        Optional<Chapter> foundChapter = chapterRepository.findByTitle(title);
 
         if (!foundChapter.isPresent()) {
             return Optional.empty();

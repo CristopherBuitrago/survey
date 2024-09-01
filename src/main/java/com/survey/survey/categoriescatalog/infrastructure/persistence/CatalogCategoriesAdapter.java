@@ -44,6 +44,7 @@ public class CatalogCategoriesAdapter implements ICategoryCatalogService {
         if (foundCategory.isPresent()) {
             CategoriesCatalog existingCategory = foundCategory.get();
             existingCategory.setName(updatedCategory.getName());
+            existingCategory.setSurveys(updatedCategory.getSurveys());
             return Optional.of(categoryRepository.save(existingCategory));
         } else {
             return Optional.empty();
@@ -51,14 +52,17 @@ public class CatalogCategoriesAdapter implements ICategoryCatalogService {
     }
 
     @Override
-    @Transactional
     public List<CategoriesCatalog> findAll() {
         return categoryRepository.findAll();
     }
 
     @Override
-    @Transactional
     public Optional<CategoriesCatalog> findByName(String name) {
         return categoryRepository.findByName(name);
+    }
+
+    @Override
+    public Optional<CategoriesCatalog> findById(int id) {
+        return categoryRepository.findById(id);
     }
 }

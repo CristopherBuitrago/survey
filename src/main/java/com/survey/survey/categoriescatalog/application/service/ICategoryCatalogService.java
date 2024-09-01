@@ -11,4 +11,5 @@ public interface ICategoryCatalogService {
     Optional<CategoriesCatalog> updateById(int id, CategoriesCatalog updatedCategory);
     List<CategoriesCatalog> findAll();
     Optional<CategoriesCatalog> findByName(String name);
+    Optional<CategoriesCatalog> findById(int id);
 }
