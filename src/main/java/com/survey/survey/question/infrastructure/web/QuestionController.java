@@ -2,6 +2,7 @@ package com.survey.survey.question.infrastructure.web;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.survey.survey.chapter.domain.entity.Chapter;
 import com.survey.survey.question.application.service.IQuestionService;
+import com.survey.survey.question.application.service.QuestionMapper;
+import com.survey.survey.question.domain.dto.QuestionDto;
 import com.survey.survey.question.domain.entity.Question;
 
 import jakarta.validation.Valid;
@@ -53,12 +55,11 @@ public class QuestionController {
 
     // NECESITO UN ENDPOINT QUE PASANDOLE EL ID DE EL CAPITULO, ME DEVUELVA UNA LISTA DE PREGUNTAS QUE TIENE ESE CAPITULO
     @GetMapping("/chapter/{chapterId}")
-    public ResponseEntity<List<Question>> getQuestionsByChapterId(@PathVariable int chapterId) {
-        List<Question> questions = questionService.findByChapterId(chapterId);
-        if (questions.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(questions);
-        }
-        return ResponseEntity.ok(questions);
+    public ResponseEntity<List<QuestionDto>> getQuestionsByChapterId(@PathVariable int chapterId) {
+        List<QuestionDto> questions = questionService.findByChapterId(chapterId).stream()
+                          .map(QuestionMapper::toDto)
+                          .collect(Collectors.toList());
+        return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
 
