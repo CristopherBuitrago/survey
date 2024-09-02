@@ -1,7 +1,9 @@
 package com.survey.survey.chapter.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.survey.survey.question.domain.entity.Question;
 import com.survey.survey.survey.domain.entity.Survey;
 
 import jakarta.persistence.Column;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -41,6 +44,9 @@ public class Chapter {
     @ManyToOne
     @JoinColumn(name="survey_id")
     private Survey survey;
+
+    @OneToMany(mappedBy = "chapter")
+    private List<Question> questions;
 
     @Column
     private String componentHtml;

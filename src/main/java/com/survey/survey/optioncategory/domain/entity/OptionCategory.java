@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.survey.survey.option.domain.entity.Option;
+import com.survey.survey.questioncategory.domain.entity.QuestionCategory;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +36,9 @@ public class OptionCategory {
 
     @OneToMany(mappedBy = "optionCategory")
     private List<Option> options;
+
+    @OneToMany(mappedBy = "optionCategory")
+    private List<QuestionCategory> questionCategories;
 
     @Column(name="created_at", columnDefinition="TIMESTAMP", nullable=false)
     private LocalDateTime createdAt;

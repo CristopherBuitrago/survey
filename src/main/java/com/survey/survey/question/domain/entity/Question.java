@@ -3,7 +3,9 @@ package com.survey.survey.question.domain.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.survey.survey.chapter.domain.entity.Chapter;
 import com.survey.survey.optionquestion.domain.entity.OptionQuestion;
+import com.survey.survey.questioncategory.domain.entity.QuestionCategory;
 import com.survey.survey.subquestion.domain.entity.SubQuestion;
 
 import jakarta.persistence.Column;
@@ -11,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
@@ -57,6 +61,13 @@ public class Question {
 
     @OneToMany(mappedBy="question")
     private List<OptionQuestion> optionQuestions;
+
+    @OneToMany(mappedBy = "question")
+    private List<QuestionCategory>  questionCategories;
+
+    @ManyToOne
+    @JoinColumn(name = "chapter_id")
+    private Chapter chapter;
 
     @PrePersist
     protected void onCreate() {
