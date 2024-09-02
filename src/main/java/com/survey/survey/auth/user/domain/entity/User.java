@@ -12,6 +12,7 @@ import com.survey.survey.auth.role.domain.entity.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +25,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.FetchType;
 
 @Data
 @Builder
@@ -39,10 +39,12 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false)
-    private String username;
+    private String username; // username is used as EMAIL for authentication procces
 
     private String password;
-    private String email;
+    
+    @Column(nullable = false)
+    private String fullname;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
