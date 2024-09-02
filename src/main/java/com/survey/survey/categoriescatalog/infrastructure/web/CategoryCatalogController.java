@@ -35,7 +35,7 @@ public class CategoryCatalogController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody CategoriesCatalog categoriesCatalog, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body(result.hasFieldErrors());
+            return ResponseEntity.badRequest().body(result.getFieldErrors());
         }
 
         CategoriesCatalog savedCategory = catalogService.save(categoriesCatalog);
@@ -50,7 +50,7 @@ public class CategoryCatalogController {
     }
 
     // find by name
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<?> findByName(@PathVariable String name) {
         Optional<CategoriesCatalog> foundCatalog = catalogService.findByName(name);
 
@@ -63,7 +63,7 @@ public class CategoryCatalogController {
     }
     
     // find by id
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         Optional<CategoriesCatalog> foundCatalog = catalogService.findById(id);
 
