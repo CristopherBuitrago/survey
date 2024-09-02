@@ -47,8 +47,10 @@ public class SurveyController {
     }
 
     @GetMapping("/all/public")
-    public ResponseEntity<List<Survey>> findAllPublics() {
-        List<Survey> surveys = surveyService.findAllPublic();
+    public ResponseEntity<List<SurveyDto>> findAllPublics() {
+        List<SurveyDto> surveys = surveyService.findAllPublic().stream()
+                .map(SurveyMapper::toDto)
+                .collect(Collectors.toList());
         return new ResponseEntity<>(surveys, HttpStatus.OK);
     }
 
