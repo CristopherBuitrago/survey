@@ -2,6 +2,7 @@ package com.survey.survey.survey.infrastructure.web;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.survey.survey.survey.application.service.ISurveyService;
+import com.survey.survey.survey.application.service.SurveyMapper;
+import com.survey.survey.survey.domain.dto.SurveyDto;
 import com.survey.survey.survey.domain.entity.Survey;
 
 import jakarta.validation.Valid;
@@ -36,14 +39,10 @@ public class SurveyController {
 
     //find all
     @GetMapping("/all")
-    public ResponseEntity<List<Survey>> findAll() {
-        /*
-        * using the service to find all,
-        * remember that surveyService allow us 
-        * navigate into other classes that implements 
-        * IUserService like for example SurveyAdapter 
-        */
-        List<Survey> surveys = surveyService.findAll();
+    public ResponseEntity<List<SurveyDto>> findAll() {
+        List<SurveyDto> surveys = surveyService.findAll().stream()
+                .map(SurveyMapper::toDto)
+                .collect(Collectors.toList());
         return new ResponseEntity<>(surveys, HttpStatus.OK);
     }
 
