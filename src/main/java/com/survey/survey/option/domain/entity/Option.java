@@ -1,8 +1,10 @@
 package com.survey.survey.option.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.survey.survey.optioncategory.domain.entity.OptionCategory;
+import com.survey.survey.optionquestion.domain.entity.OptionQuestion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -40,6 +43,9 @@ public class Option {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private OptionCategory optionCategory;
+
+    @OneToMany(mappedBy="option")
+    private List<OptionQuestion> optionQuestions;
 
     @PrePersist
     protected void onCreate(){

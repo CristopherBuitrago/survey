@@ -40,7 +40,7 @@ public class OptionCategoryController {
     }
 
     // Get all OptionCategories
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<OptionCategory>> getAllOptionCategories() {
         List<OptionCategory> optionCategories = optionCategoryService.findAll();
         return new ResponseEntity<>(optionCategories, HttpStatus.OK);
