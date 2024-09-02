@@ -43,6 +43,12 @@ public class ChapterAdapter implements IChapterService{
 
     @Override
     @Transactional
+    public List<Chapter> findBySurveyId(int surveyId) {
+        return chapterRepository.findBySurveyId(surveyId);
+    }
+
+    @Override
+    @Transactional
     public Optional<Chapter> findByTitle(String title) {
         Optional<Chapter> foundChapter = chapterRepository.findByTitle(title);
 

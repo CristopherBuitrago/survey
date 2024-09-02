@@ -1,0 +1,14 @@
+--register
+
+{
+    "username": "user@gmail.com",
+    "password": "user123",
+    "fullname": "Developing user"
+}
+
+--login
+
+{
+    "username": "user@gmail.com",
+    "password": "user123"
+}

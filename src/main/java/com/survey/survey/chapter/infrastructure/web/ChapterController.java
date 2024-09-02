@@ -46,6 +46,16 @@ public class ChapterController {
             return new ResponseEntity<>(foundChapter.orElseThrow(), HttpStatus.FOUND);
         }
     }
+
+    // ENDPOINT QUE PASANDOLE EL ID DE LA ENCUESTA, ME DEVUELVA UNA LISTA DE CAPITULOS QUE TIENE ESA ENCUESTA
+    @GetMapping("/survey/{surveyId}")
+    public ResponseEntity<List<Chapter>> getChaptersBySurveyId(@PathVariable int surveyId) {
+        List<Chapter> chapters = chapterService.findBySurveyId(surveyId);
+        if (chapters.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(chapters);
+    }
     
     // find by name
     @GetMapping("/{title}")

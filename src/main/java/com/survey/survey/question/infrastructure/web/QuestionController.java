@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.survey.survey.chapter.domain.entity.Chapter;
 import com.survey.survey.question.application.service.IQuestionService;
 import com.survey.survey.question.domain.entity.Question;
 
@@ -49,7 +50,18 @@ public class QuestionController {
             return new ResponseEntity<>(foundQuestion.orElseThrow(), HttpStatus.FOUND);
         }
     }
-    
+
+    // NECESITO UN ENDPOINT QUE PASANDOLE EL ID DE EL CAPITULO, ME DEVUELVA UNA LISTA DE PREGUNTAS QUE TIENE ESE CAPITULO
+    @GetMapping("/chapter/{chapterId}")
+    public ResponseEntity<List<Question>> getQuestionsByChapterId(@PathVariable int chapterId) {
+        List<Question> questions = questionService.findByChapterId(chapterId);
+        if (questions.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(questions);
+        }
+        return ResponseEntity.ok(questions);
+    }
+
+
     // create
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody Question question, BindingResult result) {
