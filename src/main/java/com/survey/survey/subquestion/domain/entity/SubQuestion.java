@@ -17,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,6 +37,7 @@ public class SubQuestion {
     private Question question;
 
     @Column
+    @NotBlank(message = "The field cannot be blank")
     private String subquestionText;
 
     @Column(columnDefinition="TIMESTAMP", nullable=false, updatable=false)
