@@ -47,12 +47,6 @@ public class SurveyController {
 
     @GetMapping("/all/public")
     public ResponseEntity<List<Survey>> findAllPublics() {
-        /*
-        * using the service to find all,
-        * remember that surveyService allow us 
-        * navigate into other classes that implements 
-        * IUserService like for example SurveyAdapter 
-        */
         List<Survey> surveys = surveyService.findAllPublic();
         return new ResponseEntity<>(surveys, HttpStatus.OK);
     }
