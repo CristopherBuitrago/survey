@@ -72,7 +72,7 @@ public class SurveyAdapter implements ISurveyService{
     @Override
     @Transactional
     public List<Survey> findAllPublic() {
-        return surveyRepository.findAll();
+        return surveyRepository.findByStatusTrue();
     }
 
     // find by id
