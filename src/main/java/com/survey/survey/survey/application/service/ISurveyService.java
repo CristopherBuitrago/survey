@@ -14,6 +14,8 @@ public interface ISurveyService {
     Optional<Survey> deleteById(int id);
     // find all
     List<Survey> findAll();
+    // find all public ones
+    List<Survey> findAllPublic();
     // find one by id
     Optional<Survey> findById(int id);
 }

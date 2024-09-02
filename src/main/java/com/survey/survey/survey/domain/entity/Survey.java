@@ -56,6 +56,10 @@ public class Survey {
     @Column(name="updated_at", columnDefinition="TIMESTAMP")
     private LocalDateTime updatedAt;
 
+    @Column
+    @NotBlank(message="The field cannot be blank!")
+    private Boolean status;
+
     @ManyToMany
     @JoinTable(
         name = "survey_category",

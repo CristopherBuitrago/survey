@@ -25,10 +25,14 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse login(LoginRequest request) {
-        // Autenticación usando el correo electrónico
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(); // Cambiado a findByEmail
+
+        // Autenticación usando el correo electrónico "username"
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+
         String token = jwtService.getToken(user);
+
+        String fullname = user.getFullname();
 
         // Obtener el rol del usuario
         String role = user.getRoles().stream()
@@ -38,7 +42,8 @@ public class AuthService {
 
         return AuthResponse.builder()
             .token(token)
-            .role(role) // Incluye el rol en la respuesta
+            .role(role)
+            .fullname(fullname)
             .build();
     }
 
@@ -51,7 +56,7 @@ public class AuthService {
         User newUser = User.builder()
             .username(request.getUsername())  // Puedes mantener el nombre de usuario o eliminar si ya no es necesario
             .password(passwordEncoder.encode(request.getPassword()))  // Encriptar la contraseña
-            .email(request.getEmail())
+            .fullname(request.getFullname())
             .roles(List.of(userRole))  // Asignar el rol USER por defecto
             .build();
 
