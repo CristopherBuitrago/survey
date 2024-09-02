@@ -12,6 +12,8 @@ public interface IChapterService {
     List<Chapter> findAll();
     Optional<Chapter> findById(int id);
     Optional<Chapter> findByTitle(String title);
+
+    List<Chapter> findBySurveyId(int surveyId);
     // actualizar
     Optional<Chapter> updateById(int id, Chapter chapter);
     // eliminar

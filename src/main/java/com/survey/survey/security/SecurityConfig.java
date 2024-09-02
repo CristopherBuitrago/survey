@@ -21,12 +21,23 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/auth/**").permitAll() // Permitir acceso a /auth/** sin autenticación
-                .requestMatchers("/survey/**").authenticated() // Requiere autenticación para /survey/**
-                .anyRequest().authenticated()) // Autenticar cualquier otra solicitud
-                .csrf(config -> config.disable())
-                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        return http
+                .cors(cors -> cors
+                    .configurationSource(request -> {
+                        var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
+                        corsConfiguration.addAllowedOrigin("http://localhost:5173"); // Asegúrate de que esta es la URL correcta de tu frontend
+                        corsConfiguration.addAllowedMethod("*");
+                        corsConfiguration.addAllowedHeader("*");
+                        corsConfiguration.setAllowCredentials(true);
+                        return corsConfiguration;
+                    })
+                )
+                .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF para aplicaciones sin estado (stateless)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Usar JWT en lugar de sesiones
+                .authorizeHttpRequests(authz -> authz
+                    .requestMatchers("/auth/**").permitAll() // Permitir acceso a /auth/** sin autenticación
+                    .requestMatchers("/survey/**").authenticated() // Requiere autenticación para /survey/**
+                    .anyRequest().authenticated()) // Autenticar cualquier otra solicitud
                 .authenticationProvider(authProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

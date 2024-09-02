@@ -75,4 +75,9 @@ public class QuestionAdapter implements IQuestionService{
         }
     }
 
+    @Override
+    public List<Question> findByChapterId(int chapterId) {
+        return questionRepository.findByChapterId(chapterId);
+    }
+
 }

@@ -11,6 +11,8 @@ public interface IQuestionService {
     // read
     List<Question> findAll();
     Optional<Question> findById(int id);
+
+    List<Question> findByChapterId(int chapterId);
     // update
     Optional<Question> updateById(int id, Question question);
     // delete
