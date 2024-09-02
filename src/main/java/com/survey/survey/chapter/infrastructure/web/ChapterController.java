@@ -2,6 +2,7 @@ package com.survey.survey.chapter.infrastructure.web;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.survey.survey.chapter.application.service.ChapterMapper;
 import com.survey.survey.chapter.application.service.IChapterService;
+import com.survey.survey.chapter.domain.dto.ChapterDto;
 import com.survey.survey.chapter.domain.entity.Chapter;
 
 import jakarta.validation.Valid;
@@ -49,12 +52,11 @@ public class ChapterController {
 
     // ENDPOINT QUE PASANDOLE EL ID DE LA ENCUESTA, ME DEVUELVA UNA LISTA DE CAPITULOS QUE TIENE ESA ENCUESTA
     @GetMapping("/survey/{surveyId}")
-    public ResponseEntity<List<Chapter>> getChaptersBySurveyId(@PathVariable int surveyId) {
-        List<Chapter> chapters = chapterService.findBySurveyId(surveyId);
-        if (chapters.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(chapters);
+    public ResponseEntity<List<ChapterDto>> getChaptersBySurveyId(@PathVariable int surveyId) {
+        List<ChapterDto> chapters = chapterService.findBySurveyId(surveyId).stream()
+                    .map(ChapterMapper::toDto)
+                    .collect(Collectors.toList());
+        return new ResponseEntity<>(chapters, HttpStatus.OK);
     }
     
     // find by name
