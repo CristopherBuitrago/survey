@@ -9,8 +9,6 @@ public class ChapterMapper {
         dto.setId(chapter.getId());
         dto.setNumber(chapter.getNumber());
         dto.setTitle(chapter.getTitle());
-        dto.setComponentHtml(chapter.getComponentHtml());
-        dto.setComponentreact(chapter.getComponentReact());
         dto.setCreatedAt(chapter.getCreatedAt());
         dto.setUpdatedAt(chapter.getUpdatedAt());
         return dto;

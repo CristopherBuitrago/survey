@@ -70,8 +70,6 @@ public class ChapterAdapter implements IChapterService{
             Chapter updatedChapter = foundChapter.get();
 
             updatedChapter.setId(id);
-            updatedChapter.setComponentHtml(chapter.getComponentHtml());
-            updatedChapter.setComponentReact(chapter.getComponentReact());
             updatedChapter.setNumber(chapter.getNumber());
             updatedChapter.setSurvey(chapter.getSurvey());
             updatedChapter.setTitle(chapter.getTitle());
