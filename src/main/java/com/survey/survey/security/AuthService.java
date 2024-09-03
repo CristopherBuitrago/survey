@@ -32,7 +32,7 @@ public class AuthService {
 
         String token = jwtService.getToken(user);
 
-        String fullname = user.getFullname();
+        String userfullname = user.getFullname();
 
         // Obtener el rol del usuario
         String role = user.getRoles().stream()
@@ -43,7 +43,7 @@ public class AuthService {
         return AuthResponse.builder()
             .token(token)
             .role(role)
-            .fullname(fullname)
+            .userfullname(userfullname)
             .build();
     }
 

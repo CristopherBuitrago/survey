@@ -10,8 +10,6 @@ public class SurveyMapper {
         dto.setId(survey.getId());
         dto.setName(survey.getName());
         dto.setDescription(survey.getDescription());
-        dto.setComponentHtml(survey.getComponentHtml());
-        dto.setComponentReact(survey.getComponentReact());
         dto.setStatus(survey.getStatus());
         return dto;
     }

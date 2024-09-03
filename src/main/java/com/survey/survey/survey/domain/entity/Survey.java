@@ -41,14 +41,6 @@ public class Survey {
     @Column
     @NotBlank(message="The field cannot be blank!")
     private String description;
-
-    @Column
-    @NotBlank(message="The field cannot be blank!")
-    private String componentHtml;
-
-    @Column
-    @NotBlank(message="The field cannot be blank!")
-    private String componentReact;
     
     @Column(name="created_at", columnDefinition="TIMESTAMP")
     private LocalDateTime createdAt;
