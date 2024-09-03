@@ -47,12 +47,6 @@ public class Chapter {
 
     @OneToMany(mappedBy = "chapter")
     private List<Question> questions;
-
-    @Column
-    private String componentHtml;
-
-    @Column
-    private String componentReact;
     
     @Column(columnDefinition="TIMESTAMP", nullable=false)
     private LocalDateTime createdAt;
