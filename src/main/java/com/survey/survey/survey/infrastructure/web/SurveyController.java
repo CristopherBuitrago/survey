@@ -24,20 +24,16 @@ import com.survey.survey.survey.domain.entity.Survey;
 
 import jakarta.validation.Valid;
 
-
-
-
-
 @RestController
 @RequestMapping("/survey")
 @CrossOrigin(origins = "http://localhost:5173")
 public class SurveyController {
-    
+
     // using survey service to use the methods that it ha
     @Autowired
     private ISurveyService surveyService;
 
-    //find all
+    // find all
     @GetMapping("/all")
     public ResponseEntity<List<SurveyDto>> findAll() {
         List<SurveyDto> surveys = surveyService.findAll().stream()
@@ -68,8 +64,7 @@ public class SurveyController {
             return new ResponseEntity<>(foundSurvey.orElseThrow(), HttpStatus.OK);
         }
     }
-    
-    
+
     // save
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody Survey survey, BindingResult result) {
@@ -82,26 +77,42 @@ public class SurveyController {
     }
 
     // update
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateSurvey(@PathVariable Integer id,@Valid @RequestBody Survey updatedSurvey, BindingResult result) {
+    @PutMapping("update/{id}")
+    public ResponseEntity<?> updateSurvey(@PathVariable Integer id, @Valid @RequestBody Survey updatedSurvey,
+            BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getFieldErrors());
         }
-        // first we need to find the survey
-        Optional<Survey> foundSurvey = surveyService.findById(id);
 
-        // verify if was found
-        if (!foundSurvey.isPresent()) {
-            // throw not found message
+        // Buscar la encuesta existente
+        Optional<Survey> existingSurveyOptional = surveyService.findById(id);
+        if (!existingSurveyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // update survey
-        updatedSurvey.setId(id);
-        // save update
-        surveyService.save(updatedSurvey);
-        // return successful message and the survey modified
-        return new ResponseEntity<>(updatedSurvey, HttpStatus.OK);
+        // Obtener la encuesta existente
+        Survey existingSurvey = existingSurveyOptional.get();
+
+        // Actualizar solo los campos relevantes
+        existingSurvey.setName(updatedSurvey.getName());
+        existingSurvey.setDescription(updatedSurvey.getDescription());
+
+        if (existingSurvey.getStatus()) {
+            existingSurvey.setStatus(true);
+        } else {
+            existingSurvey.setStatus(false);
+        }
+
+        // Guardar la encuesta actualizada
+        surveyService.save(existingSurvey);
+
+        SurveyDto surveyDto = new SurveyDto();
+        surveyDto.setId(existingSurvey.getId());
+        surveyDto.setName(existingSurvey.getName());
+        surveyDto.setDescription(existingSurvey.getDescription());
+        surveyDto.setStatus(existingSurvey.getStatus());
+
+        return new ResponseEntity<>(surveyDto, HttpStatus.OK);
     }
-    
+
 }
