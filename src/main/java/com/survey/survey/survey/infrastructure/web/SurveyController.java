@@ -115,4 +115,26 @@ public class SurveyController {
         return new ResponseEntity<>(surveyDto, HttpStatus.OK);
     }
 
+    @PutMapping("post/{id}")
+    public ResponseEntity<String> postSurveys(@PathVariable Integer id, @RequestBody Boolean status) {
+        
+        // Buscar la encuesta existente
+        Optional<Survey> existingSurveyOptional = surveyService.findById(id);
+        if (!existingSurveyOptional.isPresent()) {
+            return new ResponseEntity<>("Survey not found", HttpStatus.NOT_FOUND);
+        }
+
+        // Obtener la encuesta existente
+        Survey existingSurvey = existingSurveyOptional.get();
+
+        // Actualizar el estado
+        existingSurvey.setStatus(status);
+
+        // Guardar la encuesta actualizada
+        surveyService.save(existingSurvey);
+
+        return new ResponseEntity<>("Survey status updated successfully", HttpStatus.OK);
+    }
+
+
 }
