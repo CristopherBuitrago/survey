@@ -49,7 +49,6 @@ public class Survey {
     private LocalDateTime updatedAt;
 
     @Column
-    @NotBlank(message="The field cannot be blank!")
     private Boolean status;
 
     @ManyToMany
