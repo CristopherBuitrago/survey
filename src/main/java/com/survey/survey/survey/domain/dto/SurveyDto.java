@@ -11,7 +11,5 @@ public class SurveyDto {
     private int id;
     private String name;
     private String description;
-    private String componentHtml;
-    private String componentReact;
     private Boolean status;
 }
