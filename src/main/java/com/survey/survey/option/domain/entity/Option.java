@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.survey.survey.optioncategory.domain.entity.OptionCategory;
-import com.survey.survey.optionquestion.domain.entity.OptionQuestion;
+import com.survey.survey.responsequestion.domain.entity.ResponseQuestion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +45,7 @@ public class Option {
     private OptionCategory optionCategory;
 
     @OneToMany(mappedBy="option")
-    private List<OptionQuestion> optionQuestions;
+    private List<ResponseQuestion> optionQuestions;
 
     @PrePersist
     protected void onCreate(){

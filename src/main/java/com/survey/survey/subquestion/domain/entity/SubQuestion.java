@@ -3,8 +3,8 @@ package com.survey.survey.subquestion.domain.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.survey.survey.optionquestion.domain.entity.OptionQuestion;
 import com.survey.survey.question.domain.entity.Question;
+import com.survey.survey.responsequestion.domain.entity.ResponseQuestion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +45,7 @@ public class SubQuestion {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy="subQuestion")
-    private List<OptionQuestion> optionQuestions;
+    private List<ResponseQuestion> optionQuestions;
 
     @PrePersist
     protected void onCreate() {
