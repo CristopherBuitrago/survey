@@ -6,8 +6,10 @@ import java.util.List;
 import com.survey.survey.chapter.domain.entity.Chapter;
 import com.survey.survey.optionquestion.domain.entity.OptionQuestion;
 import com.survey.survey.questioncategory.domain.entity.QuestionCategory;
+import com.survey.survey.responsequestion.domain.entity.ResponseQuestion;
 import com.survey.survey.subquestion.domain.entity.SubQuestion;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -68,6 +71,9 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
+
+    @OneToOne(mappedBy="question", cascade=CascadeType.ALL, orphanRemoval=true)
+    private ResponseQuestion response;
 
     @PrePersist
     protected void onCreate() {
