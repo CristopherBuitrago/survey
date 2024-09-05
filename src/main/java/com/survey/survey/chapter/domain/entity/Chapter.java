@@ -31,6 +31,7 @@ import lombok.Setter;
 public class Chapter {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "chapter_id")
     private int id;
 
     @Column(nullable=false)

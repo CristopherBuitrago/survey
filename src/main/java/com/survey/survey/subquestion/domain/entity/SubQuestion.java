@@ -1,10 +1,8 @@
 package com.survey.survey.subquestion.domain.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.survey.survey.question.domain.entity.Question;
-import com.survey.survey.questionresponse.domain.entity.QuestionResponse;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -43,9 +40,6 @@ public class SubQuestion {
 
     @Column(columnDefinition="TIMESTAMP", nullable=false, updatable=false)
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy="subQuestion")
-    private List<QuestionResponse> responses;
 
     @PrePersist
     protected void onCreate() {

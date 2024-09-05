@@ -32,6 +32,7 @@ import lombok.Setter;
 public class Survey {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "survey_id")
     private int id;
 
     @Column

@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.survey.survey.chapter.domain.entity.Chapter;
 import com.survey.survey.questioncategory.domain.entity.QuestionCategory;
-import com.survey.survey.questionresponse.domain.entity.QuestionResponse;
 import com.survey.survey.subquestion.domain.entity.SubQuestion;
 
 import jakarta.persistence.Column;
@@ -58,9 +57,6 @@ public class Question {
 
     @OneToMany(mappedBy="question")
     private List<SubQuestion> subQuestions;
-
-    @OneToMany(mappedBy="question")
-    private List<QuestionResponse> optionQuestions;
 
     @OneToMany(mappedBy = "question")
     private List<QuestionCategory>  questionCategories;

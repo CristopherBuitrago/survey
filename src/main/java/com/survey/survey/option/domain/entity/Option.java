@@ -3,7 +3,6 @@ package com.survey.survey.option.domain.entity;
 import java.time.LocalDateTime;
 
 import com.survey.survey.optioncategory.domain.entity.OptionCategory;
-import com.survey.survey.questionresponse.domain.entity.QuestionResponse;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,10 +40,6 @@ public class Option {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private OptionCategory optionCategory;
-
-    @ManyToOne
-    @JoinColumn(name="questionresponse_id")
-    private QuestionResponse questionResponse;
 
     @PrePersist
     protected void onCreate(){
