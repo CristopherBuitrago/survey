@@ -88,13 +88,17 @@ public class ChapterController {
             return ResponseEntity.badRequest().body(result.getFieldError());
         }
 
-        Optional<Chapter> updatedChapter = chapterService.updateById(id, chapter);
+        Optional<Chapter> existingChapterOp = chapterService.findById(id);
 
-        if (!updatedChapter.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Chapter not found with id: "+id);
-        }
+        Chapter existingChapter = existingChapterOp.get();
 
-        return ResponseEntity.ok(updatedChapter.get());
+
+        existingChapter.setNumber(chapter.getNumber());
+        existingChapter.setTitle(chapter.getTitle());
+
+
+
+        return ResponseEntity.ok(chapterService.save(existingChapter));
     }
 
     // delete by id
