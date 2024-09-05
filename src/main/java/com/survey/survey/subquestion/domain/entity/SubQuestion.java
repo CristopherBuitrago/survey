@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.survey.survey.question.domain.entity.Question;
-import com.survey.survey.responsequestion.domain.entity.ResponseQuestion;
+import com.survey.survey.questionresponse.domain.entity.QuestionResponse;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +45,7 @@ public class SubQuestion {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy="subQuestion")
-    private List<ResponseQuestion> optionQuestions;
+    private List<QuestionResponse> optionQuestions;
 
     @PrePersist
     protected void onCreate() {
