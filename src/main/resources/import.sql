@@ -9,6 +9,8 @@ INSERT INTO surveys (status, created_at, updated_at, description, name) VALUES (
 
 INSERT INTO chapters (created_at, number, title, updated_at, survey_id) VALUES (CURRENT_TIMESTAMP, 1, 'Chapter 1 for Survey 1', CURRENT_TIMESTAMP, 1);
 
+INSERT INTO chapters (created_at, number, title, updated_at, survey_id) VALUES (CURRENT_TIMESTAMP, 2, 'Chapter 2 for Survey 1', CURRENT_TIMESTAMP, 1);
+
 INSERT INTO chapters (created_at, number, title, updated_at, survey_id) VALUES (CURRENT_TIMESTAMP, 1, 'Chapter 1 for Survey 2', CURRENT_TIMESTAMP, 2 );
 
 INSERT INTO chapters (created_at, number, title, updated_at, survey_id) VALUES (CURRENT_TIMESTAMP, 1,'Chapter 1 for Survey 3', CURRENT_TIMESTAMP, 3);
