@@ -11,6 +11,7 @@ public interface IOptionService {
     // read
     Optional<Option> findById(int id);
     List<Option> findAll();
+    List<Option> findByQuestionId(int questionId);
     // update
     Optional<Option> update(int id, Option option);
     // delete

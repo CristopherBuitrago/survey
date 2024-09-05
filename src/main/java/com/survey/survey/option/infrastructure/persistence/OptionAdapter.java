@@ -50,7 +50,6 @@ public class OptionAdapter implements IOptionService{
             Option optionUpdated = foundOption.get();
 
             optionUpdated.setId(id);
-            optionUpdated.setOptionCategory(option.getOptionCategory());
             optionUpdated.setOptionText(option.getOptionText());
 
             return Optional.of(optionRepository.save(optionUpdated));
@@ -70,6 +69,12 @@ public class OptionAdapter implements IOptionService{
             optionRepository.deleteById(id);
             return foundOption;
         }
+    }
+
+    @Override
+    public List<Option> findByQuestionId(int questionId) {
+        List<Option> foundOptions = optionRepository.findByQuestionId(questionId);
+        return foundOptions;
     }
     
 }
