@@ -21,6 +21,7 @@ import com.survey.survey.option.domain.entity.Option;
 
 import jakarta.validation.Valid;
 
+
 @RestController
 @RequestMapping("/options")
 public class OptionController {
@@ -99,4 +100,12 @@ public class OptionController {
         // Si se elimina con éxito, retornar una respuesta de No Content
         return new ResponseEntity<>(deletedOption.orElseThrow(), HttpStatus.OK);
     }
+
+    // obtener options por id de la pregunta
+    @GetMapping("/question/{id}")
+    public ResponseEntity<List<Option>> findByQuestionId(@PathVariable int id) {
+        List<Option> foundOptions = optionService.findByQuestionId(id);
+        return ResponseEntity.ok(foundOptions);
+    }
+    
 }

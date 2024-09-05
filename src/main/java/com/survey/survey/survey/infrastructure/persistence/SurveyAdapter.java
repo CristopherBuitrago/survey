@@ -36,7 +36,6 @@ public class SurveyAdapter implements ISurveyService{
             existingSurvey.setId(id);
             existingSurvey.setName(survey.getName());
             existingSurvey.setDescription(survey.getDescription());
-            existingSurvey.setCategories(survey.getCategories());
             // save the changes
             return Optional.of(surveyRepository.save(existingSurvey));
 

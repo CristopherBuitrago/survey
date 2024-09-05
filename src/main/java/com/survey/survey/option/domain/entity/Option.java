@@ -2,7 +2,6 @@ package com.survey.survey.option.domain.entity;
 
 import java.time.LocalDateTime;
 
-import com.survey.survey.optioncategory.domain.entity.OptionCategory;
 import com.survey.survey.question.domain.entity.Question;
 
 import jakarta.persistence.Column;
@@ -42,10 +41,6 @@ public class Option {
     @ManyToOne(targetEntity = Question.class)
     @JoinColumn(name = "question_id")
     private Question question;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private OptionCategory optionCategory;
     
     @PrePersist
     protected void onCreate(){

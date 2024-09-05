@@ -3,7 +3,6 @@ package com.survey.survey.survey.domain.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.survey.survey.categoriescatalog.domain.entity.CategoriesCatalog;
 import com.survey.survey.chapter.domain.entity.Chapter;
 
 import jakarta.persistence.Column;
@@ -11,14 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,15 +45,6 @@ public class Survey {
 
     @Column
     private Boolean status;
-
-    @ManyToMany
-    @JoinTable(
-        name = "survey_category",
-        joinColumns = @JoinColumn(name = "survey_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id"),
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"category_id", "survey_id"})}
-    )
-    private List<CategoriesCatalog> categories;
 
     @OneToMany(mappedBy="survey")
     private List<Chapter> chapters;
