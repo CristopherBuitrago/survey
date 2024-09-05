@@ -45,7 +45,7 @@ public class SubQuestion {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy="subQuestion")
-    private List<QuestionResponse> optionQuestions;
+    private List<QuestionResponse> responses;
 
     @PrePersist
     protected void onCreate() {
