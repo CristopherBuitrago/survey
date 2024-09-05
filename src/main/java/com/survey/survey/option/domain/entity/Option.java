@@ -1,10 +1,9 @@
 package com.survey.survey.option.domain.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.survey.survey.optioncategory.domain.entity.OptionCategory;
-import com.survey.survey.optionquestion.domain.entity.OptionQuestion;
+import com.survey.survey.question.domain.entity.Question;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -28,6 +26,7 @@ import lombok.Setter;
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "option_id")
     private int id;
 
     @Column(nullable = false)
@@ -40,13 +39,14 @@ public class Option {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime updatedAt;
 
+    @ManyToOne(targetEntity = Question.class)
+    @JoinColumn(name = "question_id")
+    private Question question;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private OptionCategory optionCategory;
-
-    @OneToMany(mappedBy="option")
-    private List<OptionQuestion> optionQuestions;
-
+    
     @PrePersist
     protected void onCreate(){
         this.createdAt = LocalDateTime.now();
