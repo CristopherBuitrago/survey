@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OptionDto {
     private int id;
+    private String key;
     private String optionText;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
