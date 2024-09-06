@@ -1,6 +1,6 @@
 # Campus Surveys
 
-Campus Surveys es una API diseñada por [CristopherBuitrago](https://github.com/CristopherBuitrago)** y [SantiLaguado](https://github.com/SanTiLaguado)** para la gestión de encuestas, incluyendo la creación, actualización, eliminación y obtención de encuestas, capítulos, preguntas, y opciones. Este proyecto se ha desarrollado utilizando Spring Boot y sigue buenas prácticas de arquitectura de software.
+Campus Surveys es una API diseñada por *[CristopherBuitrago](https://github.com/CristopherBuitrago)* y *[SantiLaguado](https://github.com/SanTiLaguado)* para la gestión de encuestas, incluyendo la creación, actualización, eliminación y obtención de encuestas, capítulos, preguntas, y opciones. Este proyecto se ha desarrollado utilizando Spring Boot y sigue buenas prácticas de arquitectura de software.
 
 ## Endpoints
 
