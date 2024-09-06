@@ -1,10 +1,10 @@
-package com.survey.survey.chapter.domain.entity;
+package com.survey.survey.optionquestion.domain.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
+import com.survey.survey.option.domain.entity.Option;
 import com.survey.survey.question.domain.entity.Question;
-import com.survey.survey.survey.domain.entity.Survey;
+import com.survey.survey.subquestion.domain.entity.SubQuestion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,42 +13,37 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "chapters")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Chapter {
+@Table(name="otpion_questions")
+public class OptionQuestion {
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable=false)
-    @NotNull(message="The field cannot be null!")
-    private int number;
-
-    @Column
-    @NotBlank(message="The field cannot be blank!")
-    private String title;
-    
     @ManyToOne
-    @JoinColumn(name="survey_id")
-    private Survey survey;
+    @JoinColumn(name="option_id")
+    private Option option;
 
-    @OneToMany(mappedBy = "chapter")
-    private List<Question> questions;
-    
-    @Column(columnDefinition="TIMESTAMP", nullable=false)
+    @ManyToOne
+    @JoinColumn(name="question_id")
+    private Question question;
+
+    @ManyToOne
+    @JoinColumn(name="subQuestion_id")
+    private SubQuestion subQuestion;
+
+    @Column(columnDefinition="TIMESTAMP", nullable=false, updatable=false)
     private LocalDateTime createdAt;
     
     @Column(columnDefinition="TIMESTAMP", nullable=false)
@@ -64,5 +59,4 @@ public class Chapter {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-    
 }

@@ -1,10 +1,10 @@
-package com.survey.survey.chapter.domain.entity;
+package com.survey.survey.subquestion.domain.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.survey.survey.optionquestion.domain.entity.OptionQuestion;
 import com.survey.survey.question.domain.entity.Question;
-import com.survey.survey.survey.domain.entity.Survey;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,42 +17,35 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostPersist;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "chapters")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Chapter {
+@Table(name="sub_questions")
+public class SubQuestion {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable=false)
-    @NotNull(message="The field cannot be null!")
-    private int number;
+    @ManyToOne
+    @JoinColumn(name="question_id")
+    private Question question;
 
     @Column
-    @NotBlank(message="The field cannot be blank!")
-    private String title;
-    
-    @ManyToOne
-    @JoinColumn(name="survey_id")
-    private Survey survey;
+    private String subquestionText;
 
-    @OneToMany(mappedBy = "chapter")
-    private List<Question> questions;
-    
-    @Column(columnDefinition="TIMESTAMP", nullable=false)
+    @Column(columnDefinition="TIMESTAMP", nullable=false, updatable=false)
     private LocalDateTime createdAt;
-    
-    @Column(columnDefinition="TIMESTAMP", nullable=false)
+
+    @Column(columnDefinition="TIMESTAMP", nullable=false, updatable=false)
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy="subQuestion")
+    private List<OptionQuestion> optionQuestions;
 
     @PrePersist
     protected void onCreate() {
@@ -64,5 +57,4 @@ public class Chapter {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-    
 }
