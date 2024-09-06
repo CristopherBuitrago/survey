@@ -9,6 +9,7 @@ public class OptionMapper {
         OptionDto dto = new OptionDto();
 
         dto.setId(option.getId());
+        dto.setKey(option.getKey());
         dto.setOptionText(option.getOptionText());
         dto.setCreatedAt(option.getCreatedAt());
         dto.setUpdatedAt(option.getUpdatedAt());

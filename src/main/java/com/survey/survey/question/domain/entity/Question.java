@@ -35,7 +35,6 @@ public class Question {
     private String questionNumber;
 
     @Column(nullable=false)
-    @NotBlank(message="The field cannot be blank!")
     private String responseType;
 
     @Column(nullable=false)

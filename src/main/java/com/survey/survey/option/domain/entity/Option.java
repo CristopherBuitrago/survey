@@ -30,6 +30,10 @@ public class Option {
 
     @Column(nullable = false)
     @NotBlank(message="The field cannot be blank or null")
+    private String key;
+
+    @Column(nullable = false)
+    @NotBlank(message="The field cannot be blank or null")
     private String optionText;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false)
