@@ -105,6 +105,8 @@ public class OptionController {
     }
 
     // obtener options por id de la pregunta
+
+    
     @GetMapping("/question/{id}")
     public ResponseEntity<List<OptionDto>> findByQuestionId(@PathVariable int id) {
         List<OptionDto> foundOptions = optionService.findByQuestionId(id).stream()

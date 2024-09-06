@@ -11,7 +11,7 @@ public class OptionMapper {
         dto.setId(option.getId());
         dto.setOptionText(option.getOptionText());
         dto.setCreatedAt(option.getCreatedAt());
-        dto.setCreatedAt(option.getUpdatedAt());
+        dto.setUpdatedAt(option.getUpdatedAt());
 
         return dto;
     }
