@@ -2,6 +2,7 @@ package com.survey.survey.option.infrastructure.web;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.survey.survey.option.application.service.IOptionService;
+import com.survey.survey.option.application.service.OptionMapper;
+import com.survey.survey.option.domain.dto.OptionDto;
 import com.survey.survey.option.domain.entity.Option;
 
 import jakarta.validation.Valid;
@@ -103,8 +106,11 @@ public class OptionController {
 
     // obtener options por id de la pregunta
     @GetMapping("/question/{id}")
-    public ResponseEntity<List<Option>> findByQuestionId(@PathVariable int id) {
-        List<Option> foundOptions = optionService.findByQuestionId(id);
+    public ResponseEntity<List<OptionDto>> findByQuestionId(@PathVariable int id) {
+        List<OptionDto> foundOptions = optionService.findByQuestionId(id).stream()
+                        .map(OptionMapper::toDto)
+                        .collect(Collectors.toList());
+
         return ResponseEntity.ok(foundOptions);
     }
     
